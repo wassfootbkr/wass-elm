@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wassim El Mahrouq — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue-deep: #0a0f2e;
+    --blue-dark: #0d1b4b;
+    --blue-mid: #1a3a7c;
+    --blue-bright: #1e6eff;
+    --blue-light: #4a9fff;
+    --blue-sky: #7ec8ff;
+    --blue-pale: #c8e8ff;
+    --white: #f0f8ff;
+    --accent: #00d4ff;
+    --accent2: #38bdf8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--blue-deep);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  .bg-gradient {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 10% 0%, #1e3a8a55 0%, transparent 60%),
+      radial-gradient(ellipse 60% 80% at 90% 30%, #1e6eff33 0%, transparent 55%),
+      radial-gradient(ellipse 70% 50% at 50% 100%, #0d47a133 0%, transparent 60%),
+      linear-gradient(160deg, #060d2e 0%, #0d1b4b 40%, #0a1535 100%);
+    pointer-events: none;
+  }
+
+  .blob {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.25;
+    animation: float 12s ease-in-out infinite;
+  }
+  .blob1 { width: 500px; height: 500px; background: #1e6eff; top: -100px; left: -150px; animation-delay: 0s; }
+  .blob2 { width: 400px; height: 400px; background: #00d4ff; top: 40%; right: -100px; animation-delay: 4s; }
+  .blob3 { width: 350px; height: 350px; background: #1a3a7c; bottom: 10%; left: 30%; animation-delay: 8s; }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-30px) scale(1.05); }
+  }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 4rem;
+    background: rgba(6, 13, 46, 0.6);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(30, 110, 255, 0.15);
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: 0.05em;
+    color: var(--white);
+  }
+  .nav-logo span { color: var(--accent); }
+  nav ul { list-style: none; display: flex; gap: 2.5rem; }
+  nav a {
+    text-decoration: none;
+    color: rgba(240,248,255,0.6);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  nav a:hover { color: var(--accent); }
+
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 8rem 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  #hero {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 6rem;
+    padding-left: 8rem;
+    padding-right: 4rem;
+    padding-bottom: 4rem;
+  }
+
+  .hero-tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    padding: 0.4rem 1rem;
+    border-radius: 999px;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+    width: fit-content;
+  }
+
+  .hero-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.4s forwards;
+  }
+  .hero-name .line2 {
+    background: linear-gradient(90deg, var(--blue-sky), var(--accent), var(--blue-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-desc {
+    margin-top: 1.5rem;
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: rgba(240,248,255,0.55);
+    max-width: 480px;
+    line-height: 1.7;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.6s forwards;
+  }
+
+  .hero-cta {
+    margin-top: 3rem;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.8s forwards;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, var(--blue-bright), var(--accent));
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    padding: 0.8rem 1.8rem;
+    border-radius: 8px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 0 30px rgba(30,110,255,0.4);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 50px rgba(0,212,255,0.5); }
+
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: 1px solid rgba(30,110,255,0.4);
+    color: var(--blue-sky);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    padding: 0.8rem 1.8rem;
+    border-radius: 8px;
+    transition: all 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); background: rgba(0,212,255,0.05); }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 3rem;
+    left: 8rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: rgba(240,248,255,0.3);
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeUp 0.8s 1.2s forwards;
+  }
+  .scroll-line { width: 60px; height: 1px; background: rgba(30,110,255,0.4); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .section-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .section-label::before {
+    content: '';
+    width: 30px;
+    height: 1px;
+    background: var(--accent);
+    display: inline-block;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 3.5rem;
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+  .about-text {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: rgba(240,248,255,0.7);
+    font-weight: 300;
+  }
+  .about-text p + p { margin-top: 1.2rem; }
+
+  .about-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .about-card {
+    background: rgba(30, 60, 120, 0.2);
+    border: 1px solid rgba(30, 110, 255, 0.15);
+    border-radius: 16px;
+    padding: 1.4rem;
+    backdrop-filter: blur(10px);
+    transition: border-color 0.3s, transform 0.2s;
+  }
+  .about-card:hover { border-color: rgba(0,212,255,0.4); transform: translateY(-3px); }
+  .about-card .card-icon { font-size: 1.5rem; margin-bottom: 0.7rem; }
+  .about-card h4 { font-family: 'Syne', sans-serif; font-size: 0.85rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--blue-sky); text-transform: uppercase; letter-spacing: 0.08em; }
+  .about-card p { font-size: 0.85rem; color: rgba(240,248,255,0.55); line-height: 1.6; }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 1rem;
+  }
+  .skill-pill {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    background: rgba(10, 30, 80, 0.5);
+    border: 1px solid rgba(30, 110, 255, 0.2);
+    border-radius: 12px;
+    padding: 1rem 1.2rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--white);
+    transition: all 0.25s;
+    cursor: default;
+    backdrop-filter: blur(8px);
+  }
+  .skill-pill:hover {
+    background: rgba(30, 110, 255, 0.2);
+    border-color: var(--accent);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(30,110,255,0.2);
+  }
+  .skill-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+  .timeline { position: relative; padding-left: 2rem; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 8px; bottom: 8px;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--accent), rgba(30,110,255,0.1));
+  }
+  .timeline-item { position: relative; padding: 0 0 3rem 2.5rem; }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -6px; top: 6px;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 16px var(--accent);
+  }
+  .timeline-year { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); font-weight: 500; margin-bottom: 0.4rem; }
+  .timeline-title { font-family: 'Syne', sans-serif; font-size: 1.3rem; font-weight: 700; margin-bottom: 0.3rem; }
+  .timeline-sub { font-size: 0.88rem; color: rgba(240,248,255,0.45); }
+
+  .contact-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  .contact-lead {
+    font-size: 1.05rem;
+    color: rgba(240,248,255,0.6);
+    line-height: 1.8;
+    font-weight: 300;
+  }
+  .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.1rem 1.5rem;
+    background: rgba(30, 60, 120, 0.2);
+    border: 1px solid rgba(30, 110, 255, 0.15);
+    border-radius: 12px;
+    text-decoration: none;
+    color: var(--white);
+    font-size: 0.9rem;
+    transition: all 0.25s;
+    backdrop-filter: blur(8px);
+  }
+  .contact-link:hover { border-color: var(--accent); background: rgba(0,212,255,0.08); transform: translateX(6px); }
+  .contact-link .icon { font-size: 1.2rem; }
+  .contact-link .label { color: rgba(240,248,255,0.45); font-size: 0.75rem; margin-bottom: 0.1rem; }
+  .contact-link .value { font-weight: 500; color: var(--blue-sky); }
+
+  footer {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 2rem;
+    border-top: 1px solid rgba(30,110,255,0.1);
+    color: rgba(240,248,255,0.25);
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+  }
+
+  .divider {
+    position: relative;
+    z-index: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(30,110,255,0.3), transparent);
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    nav ul { gap: 1.5rem; }
+    #hero { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .hero-scroll { left: 1.5rem; }
+    section { padding: 5rem 1.5rem; }
+    .about-grid, .contact-wrapper { grid-template-columns: 1fr; gap: 2rem; }
+    .about-cards { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-gradient"></div>
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
+<div class="blob blob3"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">W<span>.</span>EM</div>
+  <ul>
+    <li><a href="#about">À propos</a></li>
+    <li><a href="#skills">Compétences</a></li>
+    <li><a href="#formation">Formation</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div id="hero">
+  <span class="hero-tag">Étudiant BUT Informatique · IUT d'Arles</span>
+  <h1 class="hero-name">
+    Wassim<br>
+    <span class="line2">El Mahrouq</span>
+  </h1>
+  <p class="hero-desc">
+    Développeur en devenir, passionné par la programmation, les bases de données et la gestion de projet. En quête d'un stage ou d'une alternance.
+  </p>
+  <div class="hero-cta">
+    <a href="#contact" class="btn-primary">Me contacter →</a>
+    <a href="#skills" class="btn-outline">Voir mes compétences</a>
+  </div>
+  <div class="hero-scroll">
+    <span class="scroll-line"></span>
+    Scroll
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- À PROPOS -->
+<section id="about">
+  <div class="reveal">
+    <div class="section-label">01 — À propos</div>
+    <h2 class="section-title">Qui suis-je ?</h2>
+  </div>
+  <div class="about-grid reveal">
+    <div>
+      <div class="about-text">
+        <p>Actuellement en première année de <strong>BUT Informatique</strong> à l'IUT d'Arles (Université Aix-Marseille), je construis mes compétences à travers des projets concrets : développement, algorithmique et bases de données.</p>
+        <p>Mon objectif est simple — progresser, apprendre en pratiquant et trouver une opportunité de <strong>stage ou d'alternance</strong> pour mettre mes acquis en application dans un contexte professionnel.</p>
+      </div>
+    </div>
+    <div class="about-cards">
+      <div class="about-card">
+        <div class="card-icon">🌍</div>
+        <h4>Langues</h4>
+        <p>Français · Anglais · Espagnol</p>
+      </div>
+      <div class="about-card">
+        <div class="card-icon">📚</div>
+        <h4>J'apprends</h4>
+        <p>Dev, bases de données, gestion de projet, algorithmique</p>
+      </div>
+      <div class="about-card">
+        <div class="card-icon">🎯</div>
+        <h4>Objectif</h4>
+        <p>Stage · Alternance en développement</p>
+      </div>
+      <div class="about-card">
+        <div class="card-icon">⚡</div>
+        <h4>Méthode</h4>
+        <p>Projets concrets &amp; apprentissage continu</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- COMPÉTENCES -->
+<section id="skills">
+  <div class="reveal">
+    <div class="section-label">02 — Compétences</div>
+    <h2 class="section-title">Ce que je sais faire</h2>
+  </div>
+  <div class="skills-grid reveal">
+    <div class="skill-pill"><span class="skill-dot" style="background:#f5c518"></span> Python</div>
+    <div class="skill-pill"><span class="skill-dot" style="background:#f89820"></span> Java</div>
+    <div class="skill-pill"><span class="skill-dot" style="background:#e34c26"></span> HTML / CSS</div>
+    <div class="skill-pill"><span class="skill-dot" style="background:#f0db4f"></span> JavaScript</div>
+    <div class="skill-pill"><span class="skill-dot" style="background:#4a9fff"></span> SQL</div>
+    <div class="skill-pill"><span class="skill-dot" style="background:#f05032"></span> Git</div>
+    <div class="skill-pill"><span class="skill-dot" style="background:#f0c040"></span> Linux</div>
+    <div class="skill-pill"><span class="skill-dot" style="background:#5ab4fc"></span> Algorithmique</div>
+    <div class="skill-pill"><span class="skill-dot" style="background:#007acc"></span> VS Code</div>
+    <div class="skill-pill"><span class="skill-dot" style="background:#a259ff"></span> Figma (bases)</div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FORMATION -->
+<section id="formation">
+  <div class="reveal">
+    <div class="section-label">04 — Formation</div>
+    <h2 class="section-title">Mon parcours</h2>
+  </div>
+  <div class="timeline reveal">
+    <div class="timeline-item">
+      <div class="timeline-year">2022 – 2025</div>
+      <div class="timeline-title">Lycée Alphonse Daudet — Tarascon</div>
+      <div class="timeline-sub">Baccalauréat général · Spécialité Maths &amp; NSI</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">2024 – 2025</div>
+      <div class="timeline-title">BUT Informatique — 1ère année</div>
+      <div class="timeline-sub">IUT d'Arles · Université Aix-Marseille</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">En cours</div>
+      <div class="timeline-title">Projets universitaires &amp; SAÉ</div>
+      <div class="timeline-sub">Travaux pratiques et mini-projets en équipe</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="reveal">
+    <div class="section-label">05 — Contact</div>
+    <h2 class="section-title">Me contacter</h2>
+  </div>
+  <div class="contact-wrapper reveal">
+    <div class="contact-lead">
+      Je suis disponible pour un <strong>stage</strong> ou une <strong>alternance</strong>. N'hésitez pas à me contacter pour discuter d'opportunités ou de projets.
+    </div>
+    <div class="contact-links">
+      <a class="contact-link" href="mailto:wassim.elmahrouq@iut-arles.fr">
+        <span class="icon">✉️</span>
+        <div>
+          <div class="label">Email</div>
+          <div class="value">wassim.elmahrouq@iut-arles.fr</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2025 Wassim El Mahrouq — Étudiant BUT Informatique · IUT d'Arles
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => obs.observe(r));
+</script>
+</body>
+</html>
